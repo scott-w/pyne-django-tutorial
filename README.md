@@ -32,3 +32,14 @@ We can access our Django applications using a specific Django shell:
 ```
 python manage.py shell
 ```
+
+Running the Testserver
+----------------------
+
+We can run the test web server:
+
+```
+python manage.py runserver
+```
+
+Then, in a web browser, go to `http://localhost:8000`
