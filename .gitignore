@@ -19,6 +19,7 @@ parts/
 sdist/
 var/
 venv/
+*.sqlite3
 *.egg-info/
 .installed.cfg
 *.egg

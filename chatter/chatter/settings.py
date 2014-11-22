@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+LOGIN_URL = '/login/'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -23,6 +25,9 @@ SECRET_KEY = '*s(r*b1du5)vr!7o38py%gr9ctw3$z==up8sne3+_h2p0oaf)='
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+TEMPLATE_DIRS = (
+    'templates',
+)
 
 ALLOWED_HOSTS = []
 
