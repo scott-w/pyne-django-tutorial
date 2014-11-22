@@ -9,7 +9,7 @@ Getting Started
 Assuming we are using OS X or Linux:
 
 ```
-git clone https://github.com/scott-w/pyne-django-tutorial
+git clone https://github.com/scott-w/pyne-django-tutorial.git
 cd pyne-django-tutorial
 virtualenv venv
 . venv/bin/activate
