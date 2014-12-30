@@ -78,6 +78,19 @@ User.objects.create_superuser(
 )
 ```
 
+Enable our App
+--------------
+
+Django starts by creating a base settings file. Open
+`chatter/chatter/settings.py`, find line 46 and remove the leading # so it
+looks as so:
+
+```python
+  'chatter.base',
+```
+
+This will allow Django to see the new app when running commands.
+
 Create our models
 -----------------
 
@@ -97,7 +110,7 @@ class Chat(models.Model):
   """
   user = models.ForeignKey(settings.AUTH_USER_MODEL)
   content = models.CharField(max_length=200)
-  created = models.DateTimeField(auto_add_now=True)
+  created = models.DateTimeField(auto_now_add=True)
 ```
 
 Now we need to create these models in the database:

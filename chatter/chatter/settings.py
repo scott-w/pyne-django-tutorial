@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Uncomment here
-    #'chatter.base',
+    'chatter.base',
 )
 
 MIDDLEWARE_CLASSES = (
