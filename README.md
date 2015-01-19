@@ -11,10 +11,72 @@ I have already setup the account sign-up, login, and password retrieval screens.
 Django builds all of this in for us, so we can just hook up the correct parts,
 and know that it's all going to just work.
 
+Requirements
+------------
+
+Before getting started, you need to have the following:
+
+* Python 2.7
+* Git
+* Pip
+* Virtualenv
+* A text editor e.g. Atom, Sublime Text
+
+### Installing Python
+
+Python is already installed on OS X and Ubuntu. To get pip and virtualenv,
+either use your package manager:
+
+```
+sudo apt-get install python-pip
+```
+
+Or use easy install:
+
+```
+sudo easy_install pip
+```
+
+Then you can use pip to install virtualenv:
+
+```
+sudo pip install virtualenv
+```
+
+### Installing Git
+
+In Linux, use your package manager e.g.
+
+```
+sudo apt-get install git
+```
+
+Git comes installed by default in OS X Yosemite. You can install a graphical
+git client from Github (https://github.com).
+
+### Text editors
+
+* Atom (https://atom.io)
+* Sublime Text (http://www.sublimetext.com/)
+
+### Windows
+
+Using this Tutorial
+-------------------
+
+This tutorial makes heavy use of git to navigate through the code. I will
+reference tags throughout the tutorial that will let you skip ahead in the
+tutorial.
+To get to section 01 of the tutorial, run:
+
+```
+git checkout 01
+```
+
 Getting Started
 ===============
 
-Assuming we are using OS X or Linux:
+Let's get the repository downloaded and set up:
 
 ```
 git clone https://github.com/scott-w/pyne-django-tutorial.git
@@ -82,11 +144,15 @@ Enable our App
 --------------
 
 Django starts by creating a base settings file. Open
-`chatter/chatter/settings.py`, find line 46 and remove the leading # so it
+`chatter/chatter/settings.py`, find line 46 and remove the leading `#` so it
 looks as so:
 
 ```python
+INSTALLED_APPS = (
+  ...
   'chatter.base',
+  ...
+)
 ```
 
 This will allow Django to see the new app when running commands.
@@ -139,3 +205,12 @@ admin.site.register(Chat)
 Now when we navigate to `http://localhost:8000/admin/` we can see our Chat
 model. Now we can list, create and amend these records from the administrator
 backend.
+
+Skipping to the Code
+--------------------
+
+To continue the tutorial, skip ahead to tag `02`:
+
+```
+git checkout 02
+```
