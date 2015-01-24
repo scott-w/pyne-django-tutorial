@@ -214,3 +214,93 @@ To continue the tutorial, skip ahead to tag `02`:
 ```
 git checkout 02
 ```
+
+Create Some Chats
+=================
+
+Using the admin console, create a few Chat messages.
+
+
+Creating a Website
+==================
+
+In this part, we will start displaying the chat records we've been creating!
+
+Start by getting the Bootstrap CSS:
+
+```
+git checkout 03
+```
+
+Templates
+---------
+
+A template is used to create the HTML that is interpreted by your browser.
+Create a file called `templates/base/chat_list.html`:
+
+```html
+{% extends "base/base.html" %}
+
+{% block content %}
+<ul>
+{% for chat in object_list %}
+<li>{{ chat.content }}</li>
+{% endfor %}
+</ul>
+{% endblock content %}
+```
+
+Views
+-----
+
+We now need to create a view. A view is the meat of our code connecting records
+in the database to the HMTL displayed on the page. In `chatter/base/views.py`:
+
+```python
+from django.views.generic import ListView
+
+from chatter.base.models import Chat
+
+
+class ChatListView(ListView):
+  """List all chats in the system.
+  """
+  model = Chat
+```
+
+And that's all you need! If you're curious, Django views take a number of
+configuration options, but uses some reasonable pre-set defaults. With this, we
+can just put our template in the right place, and it will "just work".
+
+For those who want to see the underlying code, [CCBV](http://ccbv.co.uk) is a
+great source with an excellent breakdown of each view, and how it works.
+
+Routing
+-------
+
+Now all we need to do is tell Django what URL your view is attached to. Start
+by putting the following line in `chatter/urls.py`:
+
+```python
+url(r'^admin/', include(admin.site.urls)),
+
+# Insert the following line
+url(r'', include('chatter.base.urls')),
+```
+
+Then create a file `chatter/base/urls.py`:
+
+```python
+from django.conf.urls import patterns, url
+
+from chatter.base.views import ChatListView
+
+
+urlpatterns = patterns(
+'',
+url(r'^$', ChatListView.as_view()),
+)
+```
+
+Now, when you go to `http://localhost:8000` you will get the chats you just
+created!
