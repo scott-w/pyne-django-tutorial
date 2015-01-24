@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from chatter.base.models import Chat
+
+
+class ChatListView(ListView):
+    """List all chats in the system.
+    """
+    model = Chat
