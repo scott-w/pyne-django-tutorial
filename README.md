@@ -7,9 +7,8 @@ Chatter
 -------
 
 For the purposes of the tutorial, we will make a Twitter-like app.
-I have already setup the account sign-up, login, and password retrieval screens.
-Django builds all of this in for us, so we can just hook up the correct parts,
-and know that it's all going to just work.
+Django has built-in account creation and authentication, meaning we just need
+to wire it all up.
 
 Requirements
 ------------
@@ -219,6 +218,9 @@ Create Some Chats
 =================
 
 Using the admin console, create a few Chat messages.
+Go to `http://localhost:8000/admin/` and click on "Add" next to "Chats".
+
+From here, you can select the user to Chat from and the content.
 
 
 Creating a Website
@@ -304,3 +306,29 @@ url(r'^$', ChatListView.as_view()),
 
 Now, when you go to `http://localhost:8000` you will get the chats you just
 created!
+
+Improved HTML
+-------------
+
+Let's make our app a little better. Use the HTML below and do the following:
+* Insert the user who made the chat in the `panel-title`
+* Insert the chat body into the `panel-body`
+* Insert the time of the chat into the `panel-footer`
+* Loop through all the chats with a panel for each, as before
+
+```html
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"></h3>
+  </div>
+  <div class="panel-body">
+  </div>
+  <div class="panel-footer">
+  </div>
+</div>
+{% endblock content %}
+
+```
