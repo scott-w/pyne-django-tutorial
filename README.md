@@ -367,4 +367,92 @@ git checkout 04
 ```
 
 Things start to get a little more interesting now. We can start to examine the
-request and act on different data. Let's start with our urls.py:
+request and act on different data. Let's start by modifying
+`chatter/base/urls.py`:
+
+```python
+from django.conf.urls import patterns, url
+
+from chatter.base.views import ChatListView, UserChatListView
+
+
+urlpatterns = patterns(
+    '',
+    url(r'^$', ChatListView.as_view(), name='index'),
+    url(r'^@(?P<username>.+)/$', UserChatListView, name='chat-user')
+)
+```
+
+The `\+` is just some custom syntax that we'll use to differentiate users from
+other types of links. We need to escape the `+` to stop the regex from
+recognising it. We've also named our `username` argument for the sake of our
+views later.
+
+A quick aside, for those who don't know regex syntax, the most common patterns
+you'll see in URLs are:
+* `.+` Any character 1 or more times
+* `\d+` Any digit (0-9) 1 or more times
+* `\w+` Any letter (a-z, A-Z) 1 or more times
+
+You'll see we've also named the URLs above. You'll see why shortly.
+
+The View
+--------
+
+This is where we get interesting. We'll have to start customising Django's
+built-in views!
+
+Our standard `ListView` lets us override a method called `get_queryset` to
+simplify our filtering. Let's give it a go in `chatter/base/views.py`:
+
+```python
+class UserChatListView(ListView):
+    """List all chats filtered by username.
+    """
+    model = Chat
+    template_name = 'base/chat_list.html'
+
+    def get_queryset(self):
+        """Use the view kwargs to get a list of Chats by user.
+        """
+        return self.model.objects.filter(
+                user__username=self.kwargs['username'])
+```
+
+The first thing to note is that we have to explicitly add `template_name` as
+we want to reuse our existing template.
+
+Onto the `get_queryset` method, we can see the reference to `self.model`. It's
+possible to go without `model = Chat` here, but I prefer to do it this way.
+
+The `filter` syntax is also worth a look. You should recall our `Chat` in
+`models.py` references a `user`. We then tell Django to look inside the
+`contrib.User` model for the `username` field using the `__` syntax. You will
+see this referenced through Django's documentation.
+
+Linking to the View
+-------------------
+
+Now it's all in place, we need to figure out how to link to it. Let's jump into
+the `chatter/templates/base/chat_list.html` template at the `panel-heading`
+class:
+
+```html
+<div class="panel-heading">
+  <h3 class="panel-title">
+    <a href="{% url "chat-user" username=chat.user.username %}">
+      @{{ chat.user }}
+    </a>
+  </h3>
+</div>
+```
+
+We have introduced a template tag. Template tags are identified with
+`{% function  "args" kwarg=value %}` and let us execute Python code in our
+templates in a structured way.
+
+Have a Look
+-----------
+
+You may want to create more users and Chats from the admin console, then you'll
+be free to click on any name to see just that user's Chats!

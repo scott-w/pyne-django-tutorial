@@ -13,7 +13,8 @@ urlpatterns = patterns(
 
 # The documentation for authentication views can be found at:
 # https://docs.djangoproject.com/en/1.7/topics/auth/default/#module-django.contrib.auth.views
-urlpatterns += patterns('django.contrib.auth.views',
+urlpatterns += patterns(
+    'django.contrib.auth.views',
     url(r'^login/$', 'login', name='login'),
     url(r'^logout/$', 'logout_then_login', name='logout'),
     url(r'^reset/$', 'password_reset', name='password_reset'),
