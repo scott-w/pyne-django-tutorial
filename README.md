@@ -456,3 +456,32 @@ Have a Look
 
 You may want to create more users and Chats from the admin console, then you'll
 be free to click on any name to see just that user's Chats!
+
+Ordering
+--------
+
+You've probably noticed out Chats aren't displaying the newest first. Let's
+fix that by opening `chatter/base/models.py`:
+
+```python
+class Chat(models.Model):
+    """A single chat from a User.
+    """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    content = models.CharField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = '-created',
+```
+
+**Note the comma!** The value of `ordering` must be a list or tuple. The
+leading `-` tells Django to reverse the order.
+
+This is just a default, we can override the order in views like so:
+
+```python
+Chat.objects.filter(
+  user__username=some_value).order_by(
+  'user__username')
+```

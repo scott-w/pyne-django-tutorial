@@ -9,3 +9,6 @@ class Chat(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     content = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = '-created',
