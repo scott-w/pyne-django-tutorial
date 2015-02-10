@@ -84,6 +84,19 @@ To get to section 01 of the tutorial, run:
 git checkout 01
 ```
 
+If you're writing code as you go, you'll probably want to save it. With a
+couple of exceptions, you can keep writing code.
+
+If you want to keep your code saved before moving to a tag, you simply commit
+it:
+
+```
+git add -A
+git commit -m "Enter a reminder to yourself here"
+```
+
+Then run the `git checkout` command described.
+
 Getting Started
 ===============
 
@@ -342,5 +355,16 @@ Let's make our app a little better. Use the HTML below and do the following:
   </div>
 </div>
 {% endblock content %}
+```
+
+Filter by User
+==============
+As our number of Chats grows, it'll become impossible to see what people have
+to say! Let's view individual Chats by user. Start by moving to the latest tag:
 
 ```
+git checkout 04
+```
+
+Things start to get a little more interesting now. We can start to examine the
+request and act on different data. Let's start with our urls.py:
