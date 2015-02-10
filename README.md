@@ -60,6 +60,18 @@ git client from Github (https://github.com).
 
 ### Windows
 
+To install python, pip and django, follow the instructions at https://docs.djangoproject.com/en/1.7/howto/windows/.
+Python 3.4 comes packaged with pip and virtualenv so you shouldn't actually have to install either, just make sure that they are on PATH.
+Install git from http://git-scm.com/download/win.
+
+Another possibility is to use chocolatey (https://chocolatey.org/) which is a package manager for Windows.
+Follow the installation instructions then run:
+```
+cinst python pip git
+```
+Note that you might have to restart the shell to pick up the newly installed binaries. It has also has a fairly good selection of editors (emac, vim, sublime-text, atom) and other things such as postgres.
+
+
 Using this Tutorial
 -------------------
 
