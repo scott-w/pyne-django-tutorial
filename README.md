@@ -357,6 +357,16 @@ Let's make our app a little better. Use the HTML below and do the following:
 {% endblock content %}
 ```
 
+Recap
+=====
+
+Let's quickly recap on our first session:
+  1. We set up our app
+  2. We configured database models
+  3. We created a screen listing our data and wired it up
+  4. We played with templates
+
+
 Filter by User
 ==============
 As our number of Chats grows, it'll become impossible to see what people have
@@ -478,10 +488,37 @@ class Chat(models.Model):
 **Note the comma!** The value of `ordering` must be a list or tuple. The
 leading `-` tells Django to reverse the order.
 
-This is just a default, we can override the order in views like so:
+This sets a default which we can override in views like so:
 
 ```python
 Chat.objects.filter(
   user__username=some_value).order_by(
   'user__username')
 ```
+
+
+Authentication
+==============
+
+Firstly, let's update to the latest tag:
+
+```
+git checkout 05
+```
+
+This gives us an outline login template, with our URLs wired up. Let's take a
+quick look at our `chatter/urls.py`:
+
+```python
+urlpatterns += patterns(
+    'django.contrib.auth.views',
+    url(r'^login/$', 'login', name='login'),
+)
+```  
+
+A quick explanation here. The first argument to `patterns` is the base import
+path. That means our second argument to `url()` gets joined to that path to
+become `django.contrib.auth.views.login` and is imported by Django.
+
+For the default `login` view to work, we need
+`templates/registration/login.html`, so open it up and have a look.

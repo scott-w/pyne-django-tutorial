@@ -11,9 +11,13 @@
   <body>
     <div class="container">
       <div class="page-header">
-        <a href="{% url "index" %}">
-          <h1>Chatter <small>A simple demo app</small></h1>
-        </a>
+        <h1>
+          <a href="{% url "index" %}">Chatter</a>
+          <small>A simple demo app</small>
+
+          <a class="pull-right btn btn-success" href="{% url "login" %}">
+            Login
+          </a>
       </div>
       {% block content %}
       {% endblock content %}
