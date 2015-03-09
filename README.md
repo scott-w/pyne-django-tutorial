@@ -520,5 +520,18 @@ A quick explanation here. The first argument to `patterns` is the base import
 path. That means our second argument to `url()` gets joined to that path to
 become `django.contrib.auth.views.login` and is imported by Django.
 
-For the default `login` view to work, we need
+Before we can use it, let's tell Django where to go once we log in. Open
+`settings.py` and add the following at the bottom:
+
+```python
+LOGIN_REDIRECT_URL = '/'
+```
+
+For the default `login` view to work, we also need
 `templates/registration/login.html`, so open it up and have a look.
+
+This is just a standard HTML form, with some tags that come from the login
+view's default form class.
+
+If we wanted to, we could replace the `<input>` tags with `{{ form.fieldname }}`
+to have Django generate the HTML tags for us.
