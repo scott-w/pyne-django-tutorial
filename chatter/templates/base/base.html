@@ -15,9 +15,15 @@
           <a href="{% url "index" %}">Chatter</a>
           <small>A simple demo app</small>
 
+          {% if view.request.user.is_authenticated %}
+          <span class="pull-right small">
+            {{ view.request.user.username }}
+          </span>
+          {% else %}
           <a class="pull-right btn btn-success" href="{% url "login" %}">
             Login
           </a>
+          {% endif %}
       </div>
       {% block content %}
       {% endblock content %}

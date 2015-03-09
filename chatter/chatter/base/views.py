@@ -1,5 +1,6 @@
-from django.views.generic import ListView
+from django.views.generic import CreateView, ListView
 
+from chatter.base.forms import ChatForm
 from chatter.base.models import Chat
 
 
@@ -20,3 +21,10 @@ class UserChatListView(ListView):
         """
         return self.model.objects.filter(
             user__username=self.kwargs['username'])
+
+
+class ChatCreateView(CreateView):
+    """Create a new Chat and attach it to the logged in user.
+    """
+    model = Chat
+    form_class = ChatForm

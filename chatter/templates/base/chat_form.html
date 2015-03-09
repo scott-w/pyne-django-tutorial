@@ -1,0 +1,12 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<form class="POST">
+  <label for="id_content">
+    Enter your message:
+  </label>
+  {{ form.content }}
+
+  <button class="btn btn-primary">Chat</button>
+</form>
+{% endblock content %}

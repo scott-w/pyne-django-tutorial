@@ -503,7 +503,7 @@ Authentication
 Firstly, let's update to the latest tag:
 
 ```
-git checkout 05
+git checkout 06
 ```
 
 This gives us an outline login template, with our URLs wired up. Let's take a
@@ -535,3 +535,59 @@ view's default form class.
 
 If we wanted to, we could replace the `<input>` tags with `{{ form.fieldname }}`
 to have Django generate the HTML tags for us.
+
+Let's customise the login button so it displays the logged-in user's name. Open
+`templates/base/base.html` and look for:
+
+```html
+<a class="pull-right btn btn-success" href="{% url "login" %}">
+  Login
+</a>
+```
+
+The request object contains the currently logged-in user, with an
+`is_authenticated` method. Use this, with the `{% if %}` `{% else %}` and
+`{% endif %}` tags, to insert the following information if the user is logged
+in, otherwise display the login button. To help you, here's some HTML:
+
+```html
+<span class="pull-right small">{{ view.request.user.username }}</span>
+```
+
+User Input
+==========
+
+Finally, we have want to handle some user input. We will use a Django Form to
+take and validate the input for the user. Let's create a file `forms.py`:
+
+```python
+from django import forms
+
+from chatter.base.models import Chat
+
+
+class ChatForm(forms.ModelForm):
+    """
+    """
+    class Meta:
+        exclude = 'user', 'created'
+        model = Chat
+```
+
+Let's break this down.
+  1. We're using a `ModelForm` which hooks our form handler to the database
+  2. We tell the form not to look at the `user` or `created` fields
+  3. We point it to the `Chat` model
+
+The `ModelForm` will automatically take the fields from the attached model and
+translate them to our templates and back into the database.
+
+Let's create a new view:
+
+```python
+class ChatCreateView(CreateView):
+    """Create a new Chat and attach it to the logged in user.
+    """
+    model = Chat
+    form_class = ChatForm
+```

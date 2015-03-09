@@ -93,3 +93,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'chatter/static'),
 )
+
+LOGIN_REDIRECT_URL = '/'
