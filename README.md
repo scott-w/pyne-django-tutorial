@@ -666,3 +666,17 @@ class ChatCreateView(CreateView):
 
 Because the user has to be logged in, this is a perfectly safe way to attach
 the user to items.
+
+
+Future Development
+==================
+
+This should be a good enough base for you to build your own application. Some
+ideas:
+  * Link names from mentions
+  * Hashtags and searching
+  * Direct messages
+  * URL detection
+
+You could go as far as to hook up Django REST Framework and build a full API
+into the system.
