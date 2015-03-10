@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, ListView
 
 from chatter.base.forms import ChatForm
@@ -28,3 +29,10 @@ class ChatCreateView(CreateView):
     """
     model = Chat
     form_class = ChatForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ChatCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('index')

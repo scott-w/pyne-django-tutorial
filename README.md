@@ -582,7 +582,7 @@ Let's break this down.
 The `ModelForm` will automatically take the fields from the attached model and
 translate them to our templates and back into the database.
 
-Let's create a new view:
+Let's open `views.py` and create a new view:
 
 ```python
 class ChatCreateView(CreateView):
@@ -591,3 +591,78 @@ class ChatCreateView(CreateView):
     model = Chat
     form_class = ChatForm
 ```
+
+As before, we set the model and we also tell it the form class to use. As in the
+ListView, we have a default template name, this time called
+`base/chat_form.html` that we'll build as such:
+
+```html
+{% extends "base/base.html" %}
+
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.content.label_tag }}
+  {# Insert the content object here #}
+
+  <button class="btn btn-primary">Chat</button>
+</form>
+{% endblock content %}
+```
+
+Knowing that we have a `form` element in the context, I'll leave the content
+tag up to you.
+
+Notice `{% csrf_token %}` - a necessary security measure. Django won't accept
+your form data without it.
+
+Let's finish wiring this up and link to it, in our `urls.py` add the following:
+
+```python
+url(r'^new/$', ChatCreateView.as_view(), name='chat-create'),
+```
+
+Now let's get a link in place in our `chat_list.html` template and add the
+following just below the opening of the content block:
+
+```html
+{% if view.request.user.is_authenticated %}
+<a class="btn btn-success col-md-12" href="{% url "chat-create" %}">
+  Say Something
+</a>
+<div class="clearfix"></div>
+{% endif %}
+```
+
+Now reload and you'll see we have a new button to click that takes us to the
+create page. Try entering a new Chat.
+
+
+Advanced User Input
+===================
+
+Django isn't entirely magical. It has no way to know what user to attach the
+message to. We can't include it in the form, otherwise the user could change it,
+so we'll the user from the request object when we save the form. In our view:
+
+```python
+class ChatCreateView(CreateView):
+    """Create a new Chat and attach it to the logged in user.
+    """
+    model = Chat
+    form_class = ChatForm
+
+    def form_valid(self, form):
+        """Called when the form has validated, but before we save it.
+        """
+        form.instance.user = self.request.user
+        return super(ChatCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        """Called when the form is successfully called.
+        """
+        return reverse('index')
+```
+
+Because the user has to be logged in, this is a perfectly safe way to attach
+the user to items.

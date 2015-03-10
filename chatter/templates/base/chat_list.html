@@ -1,6 +1,14 @@
 {% extends "base/base.html" %}
 
 {% block content %}
+
+{% if view.request.user.is_authenticated %}
+<a class="btn btn-success col-md-12" href="{% url "chat-create" %}">
+  Say Something
+</a>
+<div class="clearfix"></div>
+{% endif %}
+
 {% for chat in object_list %}
 <div class="panel panel-default">
   <div class="panel-heading">
